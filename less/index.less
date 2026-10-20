@@ -162,9 +162,12 @@
     padding: 14px 16px;
     text-align: start;
   }
-  .Hero .container {
+  .Hero .container,
+  .Hero .containerNarrow {
     padding: 0;
     width: auto;
+    max-width: none;
+    margin: 0;
   }
   .Hero-title {
     font-size: 16px;
@@ -530,6 +533,7 @@
     color: var(--cc-text) !important;
     font-size: 12px;
     font-weight: 400;
+    white-space: nowrap;
 
     .TagLabel-text,
     .TagLabel-name {

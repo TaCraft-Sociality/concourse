@@ -156,10 +156,19 @@
     line-height: 28px;
   }
 
-  // The discussion page's panel sits under the controls, full width.
+  // The discussion page's panel sits under the controls, full width, and
+  // ends with its numbers: the scrubber lives in the top bar on phones.
+  .DiscussionPage-nav > ul > li.item-concoursePanel {
+    display: block;
+    margin: 0 15px 15px;
+  }
   .ConcoursePanel {
     border-radius: var(--cc-radius-lg);
-    margin: 0 15px 12px;
+    padding-bottom: 14px;
+  }
+  .ConcoursePanel-stats {
+    padding-bottom: 0;
+    border-bottom: 0;
   }
 }
 

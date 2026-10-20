@@ -15,65 +15,77 @@
     }
   }
 
-  // Core's hero becomes a plain title row beside the sidebar: no colour
-  // band, the title in the heading colour, the tags as they are in the list.
-  .DiscussionPage .DiscussionHero {
-    background: none !important;
-    color: var(--heading-color) !important;
-    padding: 24px 0 0;
-    text-align: start;
-
-    // The rule under the title stops at the column, not under the sidebar.
-    .DiscussionHero-items {
-      display: flex;
-      flex-direction: column-reverse;
-      align-items: flex-start;
-      gap: 8px;
-      margin: 0;
-      padding: 0 0 18px;
-      border-bottom: 1px solid var(--cc-line);
-    }
-    .DiscussionHero-title {
-      color: var(--heading-color) !important;
-      font-size: 24px;
-      line-height: 32px;
-      font-weight: 600;
-    }
-    .TagsLabel {
-      display: inline-flex;
-      flex-wrap: wrap;
-      gap: 4px 12px;
-    }
-    .TagLabel {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 0;
-      margin: 0;
-      background: none !important;
-      font-size: 13px;
-
-      &,
-      .TagLabel-text,
-      .TagLabel-name {
-        color: var(--cc-text) !important;
-      }
-      &::before {
-        content: '';
-        flex: 0 0 10px;
-        height: 10px;
-        border-radius: 2px;
-        background: var(--tag-bg, var(--cc-faint));
-      }
-    }
-  }
-
   .DiscussionPage-nav {
     top: calc(var(--cc-top) + 8px);
     padding-top: 24px;
 
     > ul > li {
       margin-bottom: 12px;
+    }
+  }
+}
+
+// Core's hero becomes a plain title row beside the sidebar (on phones,
+// above the stream): no colour
+// band, the title in the heading colour, the tags as they are in the list.
+.DiscussionPage .DiscussionHero {
+  background: none !important;
+  color: var(--heading-color) !important;
+  padding: 24px 0 0;
+  text-align: start;
+
+  // The rule under the title stops at the column, not under the sidebar.
+  .DiscussionHero-items {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: flex-start;
+    gap: 8px;
+    margin: 0;
+    padding: 0 0 18px;
+    border-bottom: 1px solid var(--cc-line);
+  }
+  .DiscussionHero-title {
+    color: var(--heading-color) !important;
+    font-size: 24px;
+    line-height: 32px;
+    font-weight: 600;
+  }
+  .TagsLabel {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 4px 12px;
+  }
+  .TagLabel {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0;
+    margin: 0;
+    background: none !important;
+    font-size: 13px;
+
+    &,
+    .TagLabel-text,
+    .TagLabel-name {
+      color: var(--cc-text) !important;
+    }
+    &::before {
+      content: '';
+      flex: 0 0 10px;
+      height: 10px;
+      border-radius: 2px;
+      background: var(--tag-bg, var(--cc-faint));
+    }
+  }
+}
+
+@media @cc-phone {
+  .DiscussionPage .DiscussionHero {
+    padding: 16px 0 0;
+
+    .DiscussionHero-title {
+      font-size: 20px;
+      line-height: 28px;
     }
   }
 }
