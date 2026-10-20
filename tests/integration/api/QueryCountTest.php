@@ -73,7 +73,7 @@ class QueryCountTest extends TestCase
                 $likes[] = ['post_id' => $first, 'user_id' => $l, 'created_at' => $now];
             }
 
-            $discussions[] = ['id' => $d, 'title' => "Discussion $d", 'created_at' => $now->copy()->subMinutes($d * 10), 'last_posted_at' => $now->copy()->subMinutes($d * 10 - 6), 'user_id' => $author, 'first_post_id' => $first, 'comment_count' => 6, 'participant_count' => 6];
+            $discussions[] = ['id' => $d, 'title' => "Discussion $d", 'created_at' => $now->copy()->subMinutes($d * 10), 'last_posted_at' => $now->copy()->subMinutes($d * 10 - 6), 'user_id' => $author, 'first_post_id' => $first, 'comment_count' => 6, 'participant_count' => 6, 'last_post_number' => 6];
             $links[] = ['discussion_id' => $d, 'tag_id' => 1 + 4 * ($d % 5)];
         }
 

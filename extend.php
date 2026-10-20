@@ -132,18 +132,39 @@ return [
          * not private, and approved where flarum/approval is enabled.
          */
         ->relationship('concourseParticipants', function (Discussion $discussion) {
+            $grammar = $discussion->getConnection()->getQueryGrammar();
+
             $relation = $discussion->hasMany(ParticipantRow::class, 'discussion_id')
-                ->select('discussion_id', 'user_id')
-                ->where('type', 'comment')
-                ->where('is_private', false)
-                ->whereNull('hidden_at')
-                ->whereNotNull('user_id')
-                ->groupBy('discussion_id', 'user_id')
-                ->orderByRaw('MAX('.$discussion->getConnection()->getQueryGrammar()->wrap('created_at').') desc')
+                ->join('discussions', 'discussions.id', '=', 'posts.discussion_id')
+                // 🚨 Only each discussion's latest comments are read: the
+                // unique (discussion_id, number) index finds them directly,
+                // where grouping every post of a 2,000-post thread cost
+                // ~150 ms a page (measured on 166k posts). The faces are the
+                // most recently active people, so the tail is where they are;
+                // the "+N" total is core's own participant_count.
+                ->whereRaw($grammar->wrap('posts.number').' > '.$grammar->wrap('discussions.last_post_number').' - '.ParticipantRow::WINDOW)
+                ->select('posts.discussion_id', 'posts.user_id')
+                ->where('posts.is_private', false)
+                ->whereNull('posts.hidden_at')
+                ->whereNotNull('posts.user_id')
+                ->groupBy('posts.discussion_id', 'posts.user_id')
+                ->orderByRaw('MAX('.$grammar->wrap('posts.created_at').') desc')
                 ->limit(5);
 
+            /*
+             * 🚨 SQLite plans without statistics: given `type = 'comment'` it
+             * walks posts_type_created_at_index — every comment on the forum
+             * (130 ms at 166k posts) — instead of the discussion index. The
+             * unary `+` (SQLite only) keeps that one condition off the plan.
+             */
+            if ($discussion->getConnection()->getDriverName() === 'sqlite') {
+                $relation->whereRaw('+'.$grammar->wrap('posts.type').' = ?', ['comment']);
+            } else {
+                $relation->where('posts.type', 'comment');
+            }
+
             if (resolve(ExtensionManager::class)->isEnabled('flarum-approval')) {
-                $relation->where('is_approved', true);
+                $relation->where('posts.is_approved', true);
             }
 
             return $relation;

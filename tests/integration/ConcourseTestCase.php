@@ -71,9 +71,9 @@ abstract class ConcourseTestCase extends TestCase
                 ['id' => 4, 'name' => 'Staff', 'slug' => 'staff', 'position' => 2, 'parent_id' => null, 'is_restricted' => 1],
             ],
             Discussion::class => [
-                ['id' => 1, 'title' => 'General chat', 'created_at' => $at(60), 'last_posted_at' => $at(30), 'user_id' => 2, 'first_post_id' => 1, 'comment_count' => 4, 'participant_count' => 3],
-                ['id' => 2, 'title' => 'Staff room', 'created_at' => $at(60), 'last_posted_at' => $at(60), 'user_id' => 3, 'first_post_id' => 10, 'comment_count' => 1, 'participant_count' => 1],
-                ['id' => 3, 'title' => 'Minecraft season', 'created_at' => $at(100), 'last_posted_at' => $at(94), 'user_id' => 4, 'first_post_id' => 20, 'comment_count' => 7, 'participant_count' => 7],
+                ['id' => 1, 'title' => 'General chat', 'created_at' => $at(60), 'last_posted_at' => $at(30), 'user_id' => 2, 'first_post_id' => 1, 'comment_count' => 4, 'participant_count' => 3, 'last_post_number' => 6],
+                ['id' => 2, 'title' => 'Staff room', 'created_at' => $at(60), 'last_posted_at' => $at(60), 'user_id' => 3, 'first_post_id' => 10, 'comment_count' => 1, 'participant_count' => 1, 'last_post_number' => 1],
+                ['id' => 3, 'title' => 'Minecraft season', 'created_at' => $at(100), 'last_posted_at' => $at(94), 'user_id' => 4, 'first_post_id' => 20, 'comment_count' => 7, 'participant_count' => 7, 'last_post_number' => 7],
             ],
             'discussion_tag' => [
                 ['discussion_id' => 1, 'tag_id' => 1],

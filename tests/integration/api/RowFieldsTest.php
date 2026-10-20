@@ -58,6 +58,16 @@ class RowFieldsTest extends ConcourseTestCase
     }
 
     #[Test]
+    public function only_a_discussions_latest_posts_are_read_for_faces()
+    {
+        // Pretend discussion 3 runs on for another 30 posts by nobody new:
+        // its seven commenters are now outside the window.
+        $this->database()->table('discussions')->where('id', 3)->update(['last_post_number' => 37]);
+
+        $this->assertSame([], $this->listing()['3']['concourseParticipants']);
+    }
+
+    #[Test]
     public function a_participant_carries_only_what_a_face_needs()
     {
         $person = $this->listing()['1']['concourseParticipants'][0];

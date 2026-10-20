@@ -26,6 +26,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class ParticipantRow extends AbstractModel
 {
+    /** How many of a discussion's latest posts are read for its faces. */
+    public const WINDOW = 30;
+
     protected $table = 'posts';
 
     public $timestamps = false;
