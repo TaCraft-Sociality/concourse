@@ -1,0 +1,87 @@
+{
+    "name": "ernestdefoe/concourse",
+    "description": "Concourse — a clean three-column community theme for Flarum 2. A left sidebar with your tag tree on every page, compact discussion rows with like and reply counts, and a right column with your profile card, Top Contributors and any widgets you add.",
+    "type": "flarum-extension",
+    "keywords": [
+        "flarum",
+        "flarum-extension",
+        "theme",
+        "sidebar",
+        "community",
+        "concourse"
+    ],
+    "homepage": "https://github.com/ernestdefoe/concourse",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Ernestdefoe",
+            "email": "ernestdefoe@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^8.3",
+        "flarum/core": "^2.0"
+    },
+    "suggest": {
+        "flarum/tags": "The tag tree in the left sidebar and the tag page header.",
+        "flarum/likes": "Like counts on discussion rows, and Top Contributors ranked by likes received.",
+        "flarum/messages": "The Messages tab on phones.",
+        "flarum/subscriptions": "The Following link in the sidebar.",
+        "sycho/flarum-profile-cover": "The member's own cover picture on the profile card.",
+        "fof/forum-widgets-core": "The profile card and Top Contributors are offered as widgets.",
+        "ernestdefoe/wardrobe": "Run Concourse next to other themes and let members choose."
+    },
+    "autoload": {
+        "psr-4": {
+            "ErnestDefoe\\Concourse\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ErnestDefoe\\Concourse\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "flarum-extension": {
+            "title": "Concourse",
+            "category": "theme",
+            "icon": {
+                "name": "fas fa-table-columns",
+                "backgroundColor": "#1f1f1f",
+                "color": "#f5b041"
+            }
+        }
+    },
+    "support": {
+        "issues": "https://github.com/ernestdefoe/concourse/issues",
+        "source": "https://github.com/ernestdefoe/concourse"
+    },
+    "require-dev": {
+        "ernestdefoe/wardrobe": "^1.0",
+        "flarum/likes": "^2.0",
+        "flarum/messages": "^2.0",
+        "flarum/phpstan": "^2.0",
+        "flarum/subscriptions": "^2.0",
+        "flarum/tags": "^2.0",
+        "flarum/testing": "^2.0"
+    },
+    "scripts": {
+        "test": [
+            "@test:integration"
+        ],
+        "test:integration": "phpunit -c tests/phpunit.integration.xml",
+        "test:setup": "@php tests/integration/setup.php",
+        "analyse:phpstan": "phpstan analyse"
+    },
+    "scripts-descriptions": {
+        "test": "Runs all tests.",
+        "test:integration": "Runs all integration tests.",
+        "test:setup": "Sets up a database for use with integration tests. Execute this only once.",
+        "analyse:phpstan": "Run static analysis"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "beta",
+    "prefer-stable": true
+}

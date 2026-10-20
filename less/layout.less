@@ -1,0 +1,402 @@
+// ---------------------------------------------------------------------------
+// The frame: a clean header across the top, the sidebar fixed on the left,
+// the page beside it, all inside one centred column of --cc-max.
+// ---------------------------------------------------------------------------
+
+// 🚨 Core's page template carries an inline `[data-theme^="dark"] body`
+// background (so the page never flashes white while CSS loads); the theme's
+// own ground has to outrank it or dark mode stays core's navy.
+body,
+html[data-theme] body {
+  font-family: var(--cc-font);
+  background: var(--cc-page);
+  -webkit-font-smoothing: antialiased;
+}
+
+// Where the frame's left edge is, whatever the window's width.
+@cc-left: ~"max(var(--cc-gutter), calc((100vw - var(--cc-max)) / 2 + var(--cc-gutter)))";
+
+.ConcourseShell-tabbar,
+.ConcourseShell-scrim {
+  display: none;
+}
+
+// ---- Header ---------------------------------------------------------------
+
+@media @cc-desk {
+  .App-header {
+    height: var(--header-height);
+    padding: 0;
+    background: var(--header-bg);
+    border-bottom: 1px solid var(--cc-line);
+    box-shadow: none !important;
+
+    // The header is a flex row itself, so its container must be told to
+    // fill it or it shrinks to its contents and sits in the middle.
+    .container {
+      flex: 1 1 auto;
+      width: 100%;
+      box-sizing: border-box;
+      max-width: var(--cc-max);
+      height: 100%;
+      margin: 0 auto;
+      padding: 0 var(--cc-gutter);
+    }
+  }
+
+  .Header-title {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.4px;
+
+    a {
+      color: var(--heading-color);
+    }
+  }
+
+  .Header-logo {
+    max-height: 34px;
+  }
+
+  // Central's header: search as a rounded field, then icon buttons, with the
+  // avatar alone at the end.
+  .Header-secondary {
+    .Header-controls {
+      gap: 6px;
+    }
+
+    .Search-input,
+    .item-search .Button {
+      height: 38px;
+      min-width: 240px;
+      justify-content: flex-start;
+      gap: 8px;
+      border-radius: 999px;
+      border: 1px solid var(--cc-line);
+      background: var(--cc-input);
+      color: var(--cc-muted);
+      font-weight: 400;
+      padding: 0 14px;
+
+      &:hover,
+      &:focus-visible {
+        border-color: var(--cc-pill);
+        color: var(--cc-text);
+      }
+    }
+
+    .Dropdown-toggle.Button--flat,
+    .NotificationsDropdown .Dropdown-toggle,
+    .DialogsDropdown .Dropdown-toggle {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      justify-content: center;
+      font-size: 19px;
+
+      &:hover {
+        background: var(--cc-hover);
+      }
+    }
+
+    // The unread count, as a small blue bubble on the icon's corner.
+    .Bubble,
+    .NotificationsDropdown-unread,
+    .DialogsDropdown-unread {
+      top: 4px;
+      right: 4px;
+      min-width: 16px;
+      height: 16px;
+      padding: 0 4px;
+      line-height: 16px;
+      font-size: 10px;
+      font-weight: 600;
+      border-radius: 8px;
+      background: var(--cc-accent);
+      color: var(--button-primary-color, #fff);
+      box-shadow: 0 0 0 2px var(--header-bg);
+    }
+
+    // The session menu is the avatar alone.
+    .SessionDropdown .Dropdown-toggle {
+      padding: 0 5px;
+      border-radius: 999px;
+
+      .Button-label .username {
+        display: none;
+      }
+      .Avatar {
+        --size: 34px;
+        margin: 0;
+      }
+    }
+  }
+}
+
+// ---- The page column ------------------------------------------------------
+
+@media @cc-desk {
+  // Every page's container shares the frame: it starts where the sidebar
+  // ends, and stops at the right edge of the centred column.
+  .App-content .container,
+  .App-composer .container {
+    width: auto;
+    max-width: var(--cc-max);
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: calc(var(--cc-gutter) + var(--cc-nav-w) + var(--cc-gap));
+    padding-right: var(--cc-gutter);
+  }
+}
+
+@media @cc-rail {
+  .App-content .container,
+  .App-composer .container {
+    padding-left: calc(var(--cc-gutter) + var(--cc-rail-w) + 1rem);
+  }
+}
+
+// ---- Sidebar --------------------------------------------------------------
+
+@media @cc-desk {
+  .ConcourseShell-sidebar {
+    position: fixed;
+    top: var(--header-height);
+    bottom: 0;
+    left: @cc-left;
+    width: var(--cc-nav-w);
+    z-index: 2;
+  }
+}
+
+@media @cc-rail {
+  .ConcourseShell-sidebar {
+    left: 0;
+    width: calc(var(--cc-rail-w) + var(--cc-gutter));
+    padding-left: 6px;
+  }
+}
+
+.ConcourseSidebar {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 24px 0;
+  box-sizing: border-box;
+  scrollbar-width: thin;
+  scrollbar-color: var(--cc-line) transparent;
+  color: var(--cc-text);
+  font-size: 16px;
+}
+
+.ConcourseNav {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+
+  > li.Dropdown-separator {
+    display: none;
+  }
+
+  // Ours, and the core LinkButtons other extensions add, alike.
+  .ConcourseNav-item,
+  > li > .Button,
+  > li > a {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    width: 100%;
+    min-height: 44px;
+    padding: 0 14px;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--cc-text);
+    font: inherit;
+    font-size: 16px;
+    font-weight: 400;
+    text-align: start;
+    text-decoration: none;
+    cursor: pointer;
+    box-sizing: border-box;
+
+    .ConcourseNav-icon,
+    .Button-icon {
+      width: 20px;
+      margin: 0;
+      font-size: 17px;
+      text-align: center;
+      color: var(--cc-text);
+    }
+
+    &:hover {
+      background: var(--cc-hover);
+    }
+    &.active {
+      background: var(--cc-active);
+      font-weight: 500;
+    }
+  }
+
+  &--extra {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--cc-line);
+  }
+}
+
+.ConcourseTags {
+  margin-top: 24px;
+}
+
+.ConcourseTags-heading {
+  margin: 0 0 6px;
+  font-size: inherit;
+}
+
+.ConcourseTags-toggle {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  height: 40px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 8px;
+  background: none;
+  color: var(--cc-text);
+  font: inherit;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+
+  &:hover {
+    background: var(--cc-hover);
+  }
+}
+
+.ConcourseTags-chevron {
+  width: 20px;
+  font-size: 12px;
+  text-align: center;
+  transition: transform 0.15s;
+
+  .collapsed & {
+    transform: rotate(-90deg);
+  }
+}
+
+.ConcourseTags-list,
+.ConcourseTags-children > ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.ConcourseTag {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 40px;
+  padding: 0 14px;
+  border-radius: 8px;
+  color: var(--cc-text);
+  text-decoration: none !important;
+
+  &:hover {
+    background: var(--cc-hover);
+    color: var(--cc-text);
+  }
+  &.active {
+    background: var(--cc-active);
+    font-weight: 500;
+  }
+}
+
+.ConcourseTag-swatch {
+  flex: 0 0 12px;
+  height: 12px;
+  margin: 0 4px;
+  border-radius: 2px;
+  background: var(--tag-color);
+}
+
+.ConcourseTag-icon {
+  width: 20px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.ConcourseTag-name {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ConcourseTag-dot {
+  flex: 0 0 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--cc-accent);
+}
+
+// Children hang under their parent on a hairline, in a smaller size.
+.ConcourseTags-children {
+  margin: 0 0 6px 33px;
+  padding-left: 14px;
+  border-left: 1px solid var(--cc-line);
+
+  .ConcourseTag {
+    min-height: 30px;
+    padding: 0 8px;
+    font-size: 13px;
+  }
+}
+
+.ConcourseSidebar-footer {
+  margin-top: auto;
+  padding: 24px 14px 0;
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--cc-muted);
+
+  a {
+    color: inherit;
+
+    &:hover {
+      color: var(--cc-text);
+    }
+  }
+}
+
+// The slim rail between phone and wide desktop: icons and tag swatches only.
+@media @cc-rail {
+  .ConcourseSidebar {
+    align-items: center;
+  }
+  .ConcourseNav .ConcourseNav-item,
+  .ConcourseNav > li > .Button,
+  .ConcourseNav > li > a,
+  .ConcourseTag,
+  .ConcourseTags-toggle {
+    width: 48px;
+    justify-content: center;
+    padding: 0;
+  }
+  .ConcourseNav-label,
+  .ConcourseNav > li > .Button .Button-label,
+  .ConcourseNav > li > a .Button-label,
+  .ConcourseTag-name,
+  .ConcourseTags-children,
+  .ConcourseTag-dot,
+  .ConcourseSidebar-footer,
+  .ConcourseTag--all {
+    display: none;
+  }
+}

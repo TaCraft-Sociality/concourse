@@ -1,0 +1,274 @@
+// ---------------------------------------------------------------------------
+// The discussion page: the stream in a card, and a side column with Reply,
+// the follow control and one panel holding who is taking part, three
+// numbers and the scrubber.
+// ---------------------------------------------------------------------------
+
+@media @cc-desk {
+  .DiscussionPage {
+    --sidebar-width: 17.5rem;
+    --gap: var(--cc-gap);
+
+    .Page-content {
+      margin-top: 24px;
+      max-width: none;
+    }
+  }
+
+  // Core's hero becomes a plain title row beside the sidebar: no colour
+  // band, the title in the heading colour, the tags as they are in the list.
+  .DiscussionPage .DiscussionHero {
+    background: none !important;
+    color: var(--heading-color) !important;
+    padding: 24px 0 0;
+    text-align: start;
+
+    // The rule under the title stops at the column, not under the sidebar.
+    .DiscussionHero-items {
+      display: flex;
+      flex-direction: column-reverse;
+      align-items: flex-start;
+      gap: 8px;
+      margin: 0;
+      padding: 0 0 18px;
+      border-bottom: 1px solid var(--cc-line);
+    }
+    .DiscussionHero-title {
+      color: var(--heading-color) !important;
+      font-size: 24px;
+      line-height: 32px;
+      font-weight: 600;
+    }
+    .TagsLabel {
+      display: inline-flex;
+      flex-wrap: wrap;
+      gap: 4px 12px;
+    }
+    .TagLabel {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0;
+      margin: 0;
+      background: none !important;
+      font-size: 13px;
+
+      &,
+      .TagLabel-text,
+      .TagLabel-name {
+        color: var(--cc-text) !important;
+      }
+      &::before {
+        content: '';
+        flex: 0 0 10px;
+        height: 10px;
+        border-radius: 2px;
+        background: var(--tag-bg, var(--cc-faint));
+      }
+    }
+  }
+
+  .DiscussionPage-nav {
+    top: calc(var(--header-height) + 8px);
+    padding-top: 24px;
+
+    > ul > li {
+      margin-bottom: 12px;
+    }
+  }
+}
+
+// The posts, as Central drew them: a hairline between each, the avatar beside
+// the name, the actions on the right.
+.DiscussionPage .PostStream-item {
+  border-bottom: 1px solid var(--cc-line);
+}
+.DiscussionPage .Post {
+  padding-top: 18px;
+  padding-bottom: 14px;
+}
+.DiscussionPage .PostUser h3 {
+  font-size: 14px;
+  font-weight: 600;
+}
+.DiscussionPage .Post-body {
+  font-size: 16px;
+  line-height: 1.65;
+}
+
+// ---- The panel ------------------------------------------------------------
+
+// The panel and core's scrubber are two items of the side list; drawn as one
+// card, the panel its top and the scrubber its bottom.
+.DiscussionPage-nav .item-concoursePanel {
+  margin-bottom: 0 !important;
+}
+
+.ConcoursePanel {
+  background: var(--cc-soft);
+  border-radius: var(--cc-radius-lg) var(--cc-radius-lg) 0 0;
+  padding: 18px 18px 6px;
+
+  .ConcourseParticipants {
+    margin: 0 0 14px;
+
+    .ConcourseFace {
+      --face-size: 28px;
+      box-shadow: 0 0 0 2px var(--cc-soft);
+      margin-left: -8px;
+
+      &:first-child {
+        margin-left: 0;
+      }
+    }
+  }
+}
+
+.ConcoursePanel-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+  gap: 8px;
+  margin: 0;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--cc-line);
+}
+
+.ConcoursePanel-stat {
+  display: flex;
+  flex-direction: column-reverse;
+  background: var(--cc-card);
+  border-radius: 10px;
+  padding: 8px 10px;
+
+  dd {
+    margin: 0;
+    font-size: 15px;
+    line-height: 20px;
+    font-weight: 600;
+  }
+  dt {
+    font-size: 11px;
+    font-weight: 400;
+    color: var(--cc-muted);
+  }
+}
+
+// ---- The scrubber ---------------------------------------------------------
+
+@media @cc-desk {
+  .DiscussionPage-nav .item-scrubber {
+    background: var(--cc-soft);
+    border-radius: 0 0 var(--cc-radius-lg) var(--cc-radius-lg);
+    padding: 0 12px 10px;
+  }
+
+  // The panel already says how many replies there are; when it is drawn the
+  // scrubber's own top margin goes.
+  .item-concoursePanel + .item-scrubber .PostStreamScrubber {
+    margin-top: 0;
+  }
+
+  .PostStreamScrubber .Scrubber-first,
+  .PostStreamScrubber .Scrubber-last {
+    display: flex !important;
+    align-items: center;
+    width: 100% !important;
+    height: 36px;
+    gap: 8px;
+    padding: 0 6px !important;
+    border-radius: 8px;
+    color: var(--cc-text);
+    font-size: 13px;
+    text-decoration: none !important;
+
+    .Button-icon {
+      color: var(--cc-muted);
+      margin: 0;
+    }
+    .Button-label {
+      display: flex;
+      flex: 1 1 auto;
+      align-items: baseline;
+      gap: 8px;
+    }
+    &:hover {
+      background: var(--cc-active);
+    }
+  }
+
+  .ConcourseScrubber-when {
+    margin-left: 8px;
+    font-size: 12px;
+    color: var(--cc-muted);
+  }
+
+  .Scrubber-scrollbar {
+    margin: 8px 0 8px 12px;
+  }
+
+  // A thicker rail; read in the dark ink, unread in the accent.
+  .Scrubber-before,
+  .Scrubber-after {
+    border-left: 3px solid var(--cc-rail-track);
+    margin-left: -1px;
+  }
+
+  .Scrubber-unread {
+    border-left: 3px solid var(--cc-accent);
+    margin-left: -1px;
+    background: none;
+    padding-left: 18px;
+    color: var(--cc-accent);
+    text-transform: none;
+    font-size: 11px;
+    font-weight: 600;
+  }
+
+  // The span of posts on screen is a dark segment of the rail, with a ring
+  // at its middle where the label points.
+  .Scrubber-bar {
+    position: relative;
+    width: 3px;
+    height: 100%;
+    margin-left: -1px;
+    border-radius: 2px;
+    background: var(--cc-handle);
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 13px;
+      height: 13px;
+      margin: -6.5px 0 0 -6.5px;
+      border-radius: 50%;
+      background: var(--cc-card);
+      border: 3px solid var(--cc-handle);
+      box-sizing: border-box;
+    }
+  }
+
+  // The label beside the handle, as a small white card.
+  .Scrubber-info {
+    left: 20px;
+    width: auto;
+    margin-top: -18px;
+    padding: 4px 10px;
+    border-radius: 10px;
+    background: var(--cc-card);
+    box-shadow: var(--cc-shadow);
+    font-size: 13px;
+    line-height: 17px;
+    white-space: nowrap;
+
+    strong {
+      font-weight: 600;
+    }
+  }
+
+  .Scrubber-description {
+    font-size: 11px;
+    line-height: 14px;
+  }
+}
