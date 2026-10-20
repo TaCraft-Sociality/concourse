@@ -25,6 +25,7 @@ ernestdefoe-concourse:
       admin: Admin
       tags: Tags
       all_tags: All tags
+      more: More
       unread: New activity
     head:
       search: "Results for “{q}”"

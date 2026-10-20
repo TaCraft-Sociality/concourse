@@ -41,10 +41,11 @@ function extraNavItems(): Mithril.Children[] {
 }
 
 const COLLAPSED = 'concourse.tagsCollapsed';
+const MORE_COLLAPSED = 'concourse.moreCollapsed';
 
-function readCollapsed(): boolean {
+function readCollapsed(key: string): boolean {
   try {
-    return window.localStorage.getItem(COLLAPSED) === '1';
+    return window.localStorage.getItem(key) === '1';
   } catch (e) {
     return false;
   }
@@ -58,7 +59,8 @@ function readCollapsed(): boolean {
  * on every page — the discussion page and profiles included.
  */
 export default class Sidebar extends Component {
-  collapsed = readCollapsed();
+  collapsed = readCollapsed(COLLAPSED);
+  moreCollapsed = readCollapsed(MORE_COLLAPSED);
 
   view() {
     const user = app.session.user;
@@ -122,8 +124,6 @@ export default class Sidebar extends Component {
           ) : null}
         </ul>
 
-        {this.extras()}
-
         {tree.primary.length || tree.secondary.length ? (
           <section className={classList('ConcourseTags', { collapsed: this.collapsed })}>
             <h2 className="ConcourseTags-heading">
@@ -154,6 +154,8 @@ export default class Sidebar extends Component {
           </section>
         ) : null}
 
+        {this.extras()}
+
         {footer.length ? (
           <footer className="ConcourseSidebar-footer">
             {footer.map((link, i) => [
@@ -172,22 +174,43 @@ export default class Sidebar extends Component {
     );
   }
 
+  /**
+   * Whatever other extensions add to the sidebar, in a section of its own
+   * AFTER the tag tree: a forum with fifteen extensions must not push its
+   * tags off the screen.
+   */
   extras() {
     const nav = extraNavItems();
     if (!nav.length) return null;
 
     return (
-      <ul className="ConcourseNav ConcourseNav--extra" onclick={closeDrawer}>
-        {listItems(nav)}
-      </ul>
+      <section className={classList('ConcourseTags ConcourseMore', { collapsed: this.moreCollapsed })}>
+        <h2 className="ConcourseTags-heading">
+          <button
+            type="button"
+            className="ConcourseTags-toggle"
+            aria-expanded={this.moreCollapsed ? 'false' : 'true'}
+            onclick={() => this.toggle('more')}
+          >
+            <Icon name="fas fa-chevron-down" className="ConcourseTags-chevron" />
+            <span className="ConcourseNav-label">{t('sidebar.more')}</span>
+          </button>
+        </h2>
+        {this.moreCollapsed ? null : (
+          <ul className="ConcourseNav ConcourseNav--extra" onclick={closeDrawer}>
+            {listItems(nav)}
+          </ul>
+        )}
+      </section>
     );
   }
 
-  toggle() {
-    this.collapsed = !this.collapsed;
+  toggle(which: 'tags' | 'more' = 'tags') {
+    const key = which === 'tags' ? COLLAPSED : MORE_COLLAPSED;
+    const next = which === 'tags' ? (this.collapsed = !this.collapsed) : (this.moreCollapsed = !this.moreCollapsed);
 
     try {
-      window.localStorage.setItem(COLLAPSED, this.collapsed ? '1' : '0');
+      window.localStorage.setItem(key, next ? '1' : '0');
     } catch (e) {
       // Not remembered; it still toggles for this visit.
     }

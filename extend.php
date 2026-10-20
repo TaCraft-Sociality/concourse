@@ -142,7 +142,15 @@ return [
                 // ~150 ms a page (measured on 166k posts). The faces are the
                 // most recently active people, so the tail is where they are;
                 // the "+N" total is core's own participant_count.
-                ->whereRaw($grammar->wrap('posts.number').' > '.$grammar->wrap('discussions.last_post_number').' - '.ParticipantRow::WINDOW)
+                // 🚨 last_post_number is UNSIGNED on MySQL/MariaDB: a bare
+                // "- 30" on a short thread is an out-of-range error there
+                // (SQLite never complains). The CASE only subtracts when it
+                // can, and still leaves posts.number a range on the index.
+                ->whereRaw(
+                    $grammar->wrap('posts.number').' > CASE WHEN '.$grammar->wrap('discussions.last_post_number').' > ? THEN '
+                    .$grammar->wrap('discussions.last_post_number').' - ? ELSE 0 END',
+                    [ParticipantRow::WINDOW, ParticipantRow::WINDOW]
+                )
                 ->select('posts.discussion_id', 'posts.user_id')
                 ->where('posts.is_private', false)
                 ->whereNull('posts.hidden_at')

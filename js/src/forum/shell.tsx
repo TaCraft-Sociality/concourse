@@ -25,15 +25,18 @@ export default function installShell() {
     const root = document.getElementById('app');
     if (!root) return;
 
-    const mount = (className: string, component: any) => {
+    const mount = (parent: Element, className: string, component: any, first = false) => {
       const el = document.createElement('div');
       el.className = className;
-      root.append(el);
+      first ? parent.prepend(el) : parent.append(el);
       m.mount(el, component);
     };
 
-    mount('ConcourseShell-sidebar', Sidebar);
-    mount('ConcourseShell-tabbar', TabBar);
+    // The sidebar is the first column of .App-content's grid (layout.less),
+    // so whatever a page renders — a container or a full-width section —
+    // starts beside it rather than under it.
+    mount(root.querySelector('.App-content') || root, 'ConcourseShell-sidebar', Sidebar, true);
+    mount(root, 'ConcourseShell-tabbar', TabBar);
 
     // The scrim behind the open drawer; a tap on it closes the drawer.
     const scrim = document.createElement('div');

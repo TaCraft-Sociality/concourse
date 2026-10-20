@@ -134,25 +134,72 @@ html[data-theme] body {
 }
 
 // ---- The page column ------------------------------------------------------
+//
+// One centred grid inside .App-content: the sidebar is its first column, and
+// everything else the page renders — the router's page, notices, and
+// whatever other extensions put there — flows in the second. So a page that
+// is not a centred container (a Page Builder homepage, a full-width hero)
+// still starts beside the sidebar instead of running under it.
+
+:root {
+  // Where sticky things stop: under the header, and under the ESPN CFB
+  // ticker on forums that pin it there.
+  --cc-top: var(--header-height);
+}
+.has-cfb-ticker-top {
+  --cc-top: calc(var(--header-height) + 36px);
+}
 
 @media @cc-desk {
-  // Every page's container shares the frame: it starts where the sidebar
-  // ends, and stops at the right edge of the centred column.
-  .App-content .container,
+  .App-content {
+    display: grid;
+    grid-template-columns: var(--cc-nav-w) minmax(0, 1fr);
+    column-gap: var(--cc-gap);
+    align-items: start;
+    max-width: var(--cc-max);
+    margin: 0 auto;
+    padding: 0 var(--cc-gutter);
+    box-sizing: border-box;
+
+    > * {
+      grid-column: 2;
+      min-width: 0;
+    }
+    > .ConcourseShell-sidebar {
+      grid-column: 1;
+      grid-row: 1 / span 20;
+    }
+  }
+
+  // Inside the column, a page's container is the column.
+  .App-content .container {
+    width: auto;
+    max-width: none;
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  // The composer is fixed to the window, so it is lined up with the column
+  // by hand.
   .App-composer .container {
     width: auto;
     max-width: var(--cc-max);
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0 auto;
     padding-left: calc(var(--cc-gutter) + var(--cc-nav-w) + var(--cc-gap));
     padding-right: var(--cc-gutter);
   }
 }
 
 @media @cc-rail {
-  .App-content .container,
+  .App-content {
+    grid-template-columns: var(--cc-rail-w) minmax(0, 1fr);
+    column-gap: 1rem;
+    padding-left: 6px;
+  }
   .App-composer .container {
-    padding-left: calc(var(--cc-gutter) + var(--cc-rail-w) + 1rem);
+    padding-left: calc(6px + var(--cc-rail-w) + 1rem);
   }
 }
 
@@ -160,20 +207,10 @@ html[data-theme] body {
 
 @media @cc-desk {
   .ConcourseShell-sidebar {
-    position: fixed;
-    top: var(--header-height);
-    bottom: 0;
-    left: @cc-left;
-    width: var(--cc-nav-w);
+    position: sticky;
+    top: var(--cc-top);
+    height: calc(100vh - var(--cc-top));
     z-index: 2;
-  }
-}
-
-@media @cc-rail {
-  .ConcourseShell-sidebar {
-    left: 0;
-    width: calc(var(--cc-rail-w) + var(--cc-gutter));
-    padding-left: 6px;
   }
 }
 
@@ -243,10 +280,14 @@ html[data-theme] body {
     }
   }
 
+  // Other extensions' links, under "More", a size down from ours.
   &--extra {
-    margin-top: 12px;
-    padding-top: 12px;
-    border-top: 1px solid var(--cc-line);
+    .ConcourseNav-item,
+    > li > .Button,
+    > li > a {
+      min-height: 38px;
+      font-size: 15px;
+    }
   }
 }
 
