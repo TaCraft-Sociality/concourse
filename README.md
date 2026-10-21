@@ -12,7 +12,7 @@ A clean three-column community theme for **Flarum 2**, recreating the look of *C
 - **One card for the list.** A title row says what you are looking at: Home, Following, a search, or a tag with its colour, description and child tags. The sort dropdown sits on the same row.
 - **Compact rows** with the avatar, title, tags as small coloured squares and "who replied when". On the right is a **like** count for the opening post (flarum/likes) beside the reply count. Under the title are **the people taking part**: the author first, then whoever was active most recently, then "+N".
 - **A right column** with:
-  - **your profile card**: your cover (sycho/flarum-profile-cover, or a band in your own colour), avatar, name, handle, bio (fof/user-bio) and **Edit Profile**. Guests see the forum's welcome with Sign up and Log in instead.
+  - **your profile card**: your cover ([Backdrop](https://github.com/ernestdefoe/backdrop), framed exactly as on your profile, or sycho/flarum-profile-cover; otherwise a band in your own colour), avatar, name, handle, bio (fof/user-bio) and **Edit Profile**. Guests see the forum's welcome with Sign up and Log in instead.
   - **Top Contributors**, switchable between **today, this week, this month and this year**. It ranks by likes received, or by comments on a forum without flarum/likes.
   - **any widget you add.** Both blocks are also offered as widgets for **Bespoke** and **FoF Forum Widgets**. FoF's side widgets stack in the same column.
 - **Light and dark**, following Flarum's own colour scheme setting. Central's neutral greys sit underneath, the forum's primary colour is the accent, and the font is Work Sans.

@@ -363,6 +363,42 @@
   }
 }
 
+// A Backdrop cover, painted as Backdrop paints it: the focal point is the
+// background position, the zoom a scale around it, and below 1× a blurred
+// copy fills the edges.
+.ConcourseProfile-cover--backdrop {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--cc-active);
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: var(--cc-cover-image);
+    background-position: var(--cc-cover-x, 50%) var(--cc-cover-y, 50%);
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  &::before {
+    display: none;
+  }
+
+  &::after {
+    transform: scale(var(--cc-cover-zoom, 1));
+    transform-origin: var(--cc-cover-x, 50%) var(--cc-cover-y, 50%);
+  }
+}
+
+.ConcourseProfile-cover--out::before {
+  display: block;
+  filter: blur(16px) brightness(0.85);
+  transform: scale(1.12);
+}
+
 .ConcourseProfile-body {
   display: flex;
   flex-direction: column;

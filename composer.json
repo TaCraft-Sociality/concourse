@@ -27,6 +27,7 @@
         "flarum/likes": "Like counts on discussion rows, and Top Contributors ranked by likes received.",
         "flarum/messages": "The Messages tab on phones.",
         "flarum/subscriptions": "The Following link in the sidebar.",
+        "ernestdefoe/backdrop": "The member's own cover on the profile card, framed as on their profile.",
         "sycho/flarum-profile-cover": "The member's own cover picture on the profile card.",
         "fof/forum-widgets-core": "The profile card and Top Contributors are offered as widgets.",
         "ernestdefoe/wardrobe": "Run Concourse next to other themes and let members choose."

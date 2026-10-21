@@ -23,8 +23,9 @@ interface Attrs {
  * instead.
  *
  * Everything comes from the session user already in the payload: no request.
- * The cover is sycho/flarum-profile-cover's when the member has set one,
- * otherwise a band in their own colour; the bio is fof/user-bio's.
+ * The cover is the member's own from ernestdefoe/backdrop (framed exactly as
+ * on their profile) or sycho/flarum-profile-cover, otherwise a band in their
+ * own colour; the bio is fof/user-bio's.
  */
 export default class ProfileCard extends Component<Attrs> {
   oninit(vnode: Mithril.Vnode<Attrs, this>) {
@@ -42,16 +43,13 @@ export default class ProfileCard extends Component<Attrs> {
   }
 
   member(user: any) {
-    const cover = user.attribute('cover') as string | null | undefined;
     const bioHtml = user.attribute('bioHtml') as string | null | undefined;
     const bio = user.attribute('bio') as string | null | undefined;
     const color = user.color() || 'var(--cc-faint)';
 
     return (
       <section className="ConcourseBlock ConcourseProfile" aria-label={ts('profile.label')}>
-        <div className={'ConcourseProfile-cover' + (cover ? ' ConcourseProfile-cover--image' : '')} style={{ '--cover-color': color }}>
-          {cover ? <img src={cover} alt="" loading="lazy" /> : null}
-        </div>
+        {cover(user, color)}
         <div className="ConcourseProfile-body">
           <Link href={app.route.user(user)} className="ConcourseProfile-avatar">
             <Avatar user={user} />
@@ -93,4 +91,51 @@ export default class ProfileCard extends Component<Attrs> {
       </section>
     );
   }
+}
+
+const clamp = (value: unknown, min: number, max: number, fallback: number) => {
+  const n = Number(value);
+  return Number.isFinite(n) ? Math.min(max, Math.max(min, n)) : fallback;
+};
+
+/**
+ * The card's cover.
+ *
+ * Backdrop sends `{url, small, x, y, zoom}`: the small copy (960 px) is plenty
+ * for a 19rem card, and x/y/zoom are the focal point and zoom the member set
+ * in Backdrop's editor, so the card shows the same part of the picture as
+ * their profile. Zoomed out below 1×, a blurred copy fills the edges, as
+ * Backdrop does.
+ */
+function cover(user: any, color: string) {
+  const backdrop = user.attribute('backdrop') as { url?: string; small?: string; x?: number; y?: number; zoom?: number } | null | undefined;
+  const src = backdrop && (backdrop.small || backdrop.url);
+
+  if (src) {
+    const x = clamp(backdrop.x, 0, 100, 50);
+    const y = clamp(backdrop.y, 0, 100, 50);
+    const zoom = clamp(backdrop.zoom, 0.5, 4, 1);
+
+    return (
+      <div
+        className={'ConcourseProfile-cover ConcourseProfile-cover--backdrop' + (zoom < 1 ? ' ConcourseProfile-cover--out' : '')}
+        style={{
+          // Only ever inside url("…"), with the characters that could end it encoded.
+          '--cc-cover-image': `url("${String(src).replace(/["\\\n\r]/g, (c) => encodeURIComponent(c))}")`,
+          '--cc-cover-x': `${x}%`,
+          '--cc-cover-y': `${y}%`,
+          '--cc-cover-zoom': String(zoom),
+        }}
+        aria-hidden="true"
+      />
+    );
+  }
+
+  const image = user.attribute('cover') as string | null | undefined;
+
+  return (
+    <div className={'ConcourseProfile-cover' + (image ? ' ConcourseProfile-cover--image' : '')} style={{ '--cover-color': color }}>
+      {image ? <img src={image} alt="" loading="lazy" /> : null}
+    </div>
+  );
 }
