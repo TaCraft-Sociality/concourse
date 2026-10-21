@@ -399,7 +399,11 @@
   transform: scale(1.12);
 }
 
+// Above the cover: a Backdrop cover is positioned (to frame its picture), and
+// a positioned box paints over the avatar that overlaps it from here.
 .ConcourseProfile-body {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
