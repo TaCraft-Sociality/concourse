@@ -141,12 +141,12 @@ html[data-theme] body {
 // is not a centred container (a Page Builder homepage, a full-width hero)
 // still starts beside the sidebar instead of running under it.
 
-:root {
+:where(:root) {
   // Where sticky things stop: under the header, and under the ESPN CFB
   // ticker on forums that pin it there.
   --cc-top: var(--header-height);
 }
-.has-cfb-ticker-top {
+:where(.has-cfb-ticker-top) {
   --cc-top: calc(var(--header-height) + 36px);
 }
 
