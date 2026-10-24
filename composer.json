@@ -1,5 +1,5 @@
 {
-    "name": "ernestdefoe/concourse",
+    "name": "tacraft-sociality/concourse",
     "description": "Concourse — a clean three-column community theme for Flarum 2. A left sidebar with your tag tree on every page, compact discussion rows with like and reply counts, and a right column with your profile card, Top Contributors and any widgets you add.",
     "type": "flarum-extension",
     "keywords": [
@@ -10,7 +10,7 @@
         "community",
         "concourse"
     ],
-    "homepage": "https://github.com/ernestdefoe/concourse",
+    "homepage": "https://github.com/TaCraft-Sociality/concourse",
     "license": "MIT",
     "authors": [
         {
@@ -54,8 +54,8 @@
         }
     },
     "support": {
-        "issues": "https://github.com/ernestdefoe/concourse/issues",
-        "source": "https://github.com/ernestdefoe/concourse"
+        "issues": "https://github.com/TaCraft-Sociality/concourse/issues",
+        "source": "https://github.com/TaCraft-Sociality/concourse"
     },
     "require-dev": {
         "ernestdefoe/wardrobe": "^1.0",
