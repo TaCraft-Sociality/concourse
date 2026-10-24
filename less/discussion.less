@@ -6,12 +6,13 @@
 
 @media @cc-desk {
   .DiscussionPage {
-    --sidebar-width: 17.5rem;
+    --sidebar-width: 14rem;
     --gap: var(--cc-gap);
 
     .Page-content {
       margin-top: 24px;
       max-width: none;
+      width: 100% !important;
     }
   }
 
@@ -283,4 +284,8 @@
     font-size: 11px;
     line-height: 14px;
   }
+}
+  .DiscussionPage .Post-stream,
+  .DiscussionPage .Post-body {
+    max-width: 100% !important;
 }

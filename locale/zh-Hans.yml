@@ -1,0 +1,64 @@
+ernestdefoe-concourse:
+  admin:
+    settings:
+      show_profile_label: 显示个人名片
+      show_profile_help: 在右侧栏顶部显示当前读者的个人名片，包含背景封面、头像、签名以及“编辑个人资料”按钮。游客则会看到论坛的欢迎信息以及“注册”和“登录”按钮。
+      show_contributors_label: 显示活跃贡献者（排行榜）
+      show_contributors_help: 显示在所选时间段内获得最多点赞（如果未安装点赞插件，则为发表评论最多）的用户。仅统计公开的讨论。
+      contributors_period_label: 活跃贡献者默认显示的时间段
+      contributors_period_help: 访客首次看到的时间段。他们可以在今天、本周、本月和今年之间切换。
+      period_day: 今天
+      period_week: 本周
+      period_month: 本月
+      period_year: 今年
+      contributors_count_label: 活跃贡献者显示人数
+      contributors_count_help: 在 1 到 10 之间。
+      show_participants_label: 显示参与讨论的用户
+      show_participants_help: 在讨论列表的每个帖子下方以及讨论页的侧边面板中显示用户的小头像。
+      footer_links_label: 侧边栏底部链接
+      footer_links_help: "每行一个链接，格式为：名称 | 地址。地址可以是本论坛的页面（如 /p/about）或完整的 https:// 链接。"
+  forum:
+    sidebar:
+      label: 论坛导航
+      home: 首页
+      following: 关注
+      admin: 管理员
+      tags: 标签
+      all_tags: 所有标签
+      more: 更多
+      unread: 有新动态
+    head:
+      search: "“{q}”的搜索结果"
+    blocks:
+      label: 个人资料与社区
+    profile:
+      label: 你的个人资料
+      edit: 编辑个人资料
+      welcome: "欢迎来到 {forum}"
+    contributors:
+      title: 活跃贡献者
+      period_label: 时间段
+      period:
+        day: 今日
+        week: 本周
+        month: 本月
+        year: 本年
+      likes: "{count, plural, one {{formatted} 个赞} other {{formatted} 个赞}}"
+      posts: "{count, plural, one {{formatted} 条评论} other {{formatted} 条评论}}"
+      empty:
+        day: 今天还没有人上榜。
+        week: 本周还没有人上榜。
+        month: 本月还没有人上榜。
+        year: 今年还没有人上榜。
+    row:
+      likes: "{count, plural, one {首帖获得 # 个赞} other {首帖获得 # 个赞}}"
+      participants: "{count, plural, one {# 人参与} other {# 人参与}}"
+    panel:
+      label: 关于此讨论
+      replies: "{count, plural, one {条回复} other {条回复}}"
+      participants: "{count, plural, one {人} other {人}}"
+      views: "{count, plural, one {次浏览} other {次浏览}}"
+    phone:
+      tabs: 主菜单
+      messages: 私信
+      more: 更多
