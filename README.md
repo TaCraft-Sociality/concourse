@@ -1,5 +1,29 @@
 # Concourse
 
+> **本仓库是 [ernestdefoe/concourse](https://github.com/ernestdefoe/concourse) 的 Fork 版本**
+> 维护者：TaCraft-Sociality
+> 原项目：Concourse — a clean three-column community theme for Flarum 2
+>
+> 本 Fork 在保持原版功能的基础上，做了一些本地化与界面调整。如果你安装本仓库fork的主题遇到问题，请优先在本仓库提 Issue，而不是去上游仓库。
+
+## Fork 改动说明
+
+本 Fork 基于上游 `ernestdefoe/concourse`，主要改动如下：
+
+- **调整页面宽度**：对整体布局宽度做了微调，让阅读区域更舒展。
+- **发帖按钮置顶并变黄**：将“开始讨论”按钮固定在顶部，并改为黄色高亮，提升可见性。
+- **汉化语言包**：补充了简体中文语言包，界面文案更贴合中文用户习惯。
+
+> 安装本 Fork 请使用：
+> ```sh
+> composer require tacraft-sociality/concourse:dev-main
+> ```
+> 并确保你的 Flarum 环境为 **Flarum 2.x**、**PHP ≥ 8.3**。
+>
+> 由于包名与上游不同，本 Fork 不能与 `ernestdefoe/concourse` 同时安装，二者选其一即可。
+
+---
+
 A clean three-column community theme for **Flarum 2**, recreating the look of *Central*, the Discourse theme Carson Chang and the Discourse team previewed on Meta and never shipped. There is a sidebar with your tag tree on every page, a card holding the discussion list, and a column on the right with your profile and the forum's Top Contributors.
 
 ![Concourse, light](screenshots/01-home-light.png)
@@ -70,23 +94,7 @@ Top Contributors only counts what a **guest** could see: public discussions and 
 
 ## Installation
 
-```sh
-composer require ernestdefoe/concourse
-```
-
-Then enable **Concourse** in your admin panel. To update:
+> **本 Fork 安装方式**
 
 ```sh
-composer update ernestdefoe/concourse
-php flarum cache:clear
-```
-
-## Credits
-
-The design is Central's, by Carson Chang and the Discourse team (MIT, © Civilized Discourse Construction Kit, Inc.). See [NOTICE](NOTICE). The code is written fresh for Flarum. Work Sans is by the Work Sans Project Authors (SIL OFL 1.1) and is self-hosted.
-
-If Concourse is useful to you, you can [buy me a coffee](https://buymeacoffee.com/ernestdefoe).
-
-## Licence
-
-MIT
+composer require tacraft-sociality/concourse:dev-main
