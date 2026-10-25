@@ -28,7 +28,9 @@
 // Core's hero becomes a plain title row beside the sidebar (on phones,
 // above the stream): no colour
 // band, the title in the heading colour, the tags as they are in the list.
-.DiscussionPage .DiscussionHero {
+// 🚨 Not Marquee's card: it is always dark, and these !important ink colours
+// turned its title and text near-black on it.
+.DiscussionPage .DiscussionHero:not(.MarqueeHero) {
   background: none !important;
   color: var(--heading-color) !important;
   padding: 24px 0 0;
@@ -80,7 +82,7 @@
 }
 
 @media @cc-phone {
-  .DiscussionPage .DiscussionHero {
+  .DiscussionPage .DiscussionHero:not(.MarqueeHero) {
     padding: 16px 0 0;
 
     .DiscussionHero-title {
