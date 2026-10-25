@@ -589,3 +589,99 @@
     }
   }
 }
+
+.TagTiles {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)) !important;
+  gap: 12px !important; 
+  padding: 0 16px !important;
+}
+
+.TagTile {
+  border-radius: 12px !important; 
+  padding: 12px 16px !important;
+  min-height: 50px !important;
+  height: auto !important;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05) !important;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  transition: transform 0.2s, box-shadow 0.2s !important;
+}
+
+.TagTile:hover {
+  transform: translateY(-1px) !important;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.08) !important;
+}
+
+.TagTile-heading {
+  gap: 8px !important;
+  display: flex !important;
+  align-items: center !important;
+  margin: 0 !important;
+}
+
+.TagTile-name {
+  font-size: 15px !important; 
+  margin: 0 !important;
+  white-space: nowrap !important;
+}
+
+.TagTile-description,
+.TagTile-lastPostedDiscussion,
+.TagTile-children {
+  display: none !important;
+}
+
+.TagCloud {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 8px !important;
+  margin-top: 24px !important;
+  padding: 0 16px !important;
+}
+
+.TagCloud .TagLabel {
+  display: inline-flex !important;
+  align-items: center !important;
+  padding: 6px 14px !important; 
+  border-radius: 999px !important;
+  font-size: 13px !important; 
+  background: var(--cc-soft) !important;
+  border: 1px solid var(--cc-line) !important;
+  text-decoration: none !important;
+  transition: all 0.2s ease !important;
+}
+
+.TagCloud .TagLabel .icon,
+.TagCloud .TagLabel .TagLabel-count {
+  display: none !important;
+}
+
+.TagCloud .TagLabel:hover {
+  background: var(--cc-hover) !important;
+  border-color: var(--cc-pill) !important;
+}
+
+@media (max-width: 767.98px) {
+  .TagTiles {
+    grid-template-columns: repeat(2, 1fr) !important; 
+    padding: 0 12px !important; 
+    gap: 10px !important;
+  }
+
+  .TagTile {
+    min-height: 44px !important;
+    padding: 8px 12px !important;
+    justify-content: center !important;
+  }
+
+  .TagTile-name {
+    font-size: 14px !important;
+  }
+
+  .TagCloud {
+    padding: 0 12px !important;
+  }
+}
