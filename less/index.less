@@ -703,3 +703,55 @@
     margin-bottom: 10px !important;
   }
 }
+
+.ConcourseExcerpt {
+  display: -webkit-box !important;
+  -webkit-line-clamp: 3 !important; 
+  -webkit-box-orient: vertical !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  word-break: break-word !important;
+  max-height: 4.5em !important; 
+  color: var(--cc-muted) !important;
+  margin-top: 4px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.IndexPage .DiscussionListItem-title,
+.IndexPage .DiscussionListItem-title a {
+  font-weight: 700 !important;
+  color: #2563eb !important;
+}
+.IndexPage .DiscussionListItem-title a:hover {
+  color: #1d4ed8 !important;
+}
+
+.IndexPage .Stickiest-superSticky .DiscussionListItem-title,
+.IndexPage .Stickiest-superSticky .DiscussionListItem-title a,
+.IndexPage .Stickiest-tagSticky .DiscussionListItem-title,
+.IndexPage .Stickiest-tagSticky .DiscussionListItem-title a {
+  color: #f59e0b !important;
+}
+.IndexPage .Stickiest-superSticky .DiscussionListItem-title a:hover,
+.IndexPage .Stickiest-tagSticky .DiscussionListItem-title a:hover {
+  color: #d97706 !important;
+}
+
+[data-theme^='dark'] .IndexPage .DiscussionListItem-title,
+[data-theme^='dark'] .IndexPage .DiscussionListItem-title a {
+  color: #60a5fa !important; 
+}
+[data-theme^='dark'] .IndexPage .DiscussionListItem-title a:hover {
+  color: #93c5fd !important;
+}
+[data-theme^='dark'] .ConcourseExcerpt {
+  color: var(--cc-muted) !important;
+}
+
+[data-theme^='dark'] .IndexPage .Stickiest-superSticky .DiscussionListItem-title,
+[data-theme^='dark'] .IndexPage .Stickiest-superSticky .DiscussionListItem-title a,
+[data-theme^='dark'] .IndexPage .Stickiest-tagSticky .DiscussionListItem-title,
+[data-theme^='dark'] .IndexPage .Stickiest-tagSticky .DiscussionListItem-title a {
+  color: #fbbf24 !important;
+}

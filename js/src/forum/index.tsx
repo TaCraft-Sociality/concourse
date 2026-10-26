@@ -1,4 +1,6 @@
 import app from 'flarum/forum/app';
+import { extend } from 'flarum/common/extend';
+import DiscussionListItem from 'flarum/forum/components/DiscussionListItem';
 
 import installShell from './shell';
 import installIndexPage from './indexPage';
@@ -26,6 +28,13 @@ app.initializers.add(
     installRows();
     installDiscussionPage();
     registerWidgets();
+
+    extend(DiscussionListItem.prototype, 'infoItems', function (this: any, items) {
+      const excerpt = this.attrs.discussion.attribute('concourseExcerpt');
+      if (excerpt) {
+        items.add('excerpt', m('div', { className: 'ConcourseExcerpt' }, excerpt + '...'), 50);
+      }
+    });
   },
   -100
 );

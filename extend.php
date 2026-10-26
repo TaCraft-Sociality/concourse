@@ -112,40 +112,20 @@ return [
         ->serializeToForum('concourseFooterLinks', 'ernestdefoe-concourse.footer_links', [FooterLinks::class, 'parse']),
 
     (new Extend\Model(Discussion::class))
-        /*
-         * How many likes the opening post has, as one row per post. Eager
-         * loaded for a page of rows, this is ONE grouped query on
-         * flarum/likes' table. Only named when flarum/likes is enabled.
-         */
+        ->relationship('concourseExcerpt', fn (Discussion $discussion) => $discussion
+            ->hasOne(\Flarum\Post\Post::class, 'discussion_id', 'id')
+            ->where('number', 1)
+            ->select('id', 'discussion_id', 'content'))
         ->relationship('concourseOpLikes', fn (Discussion $discussion) => $discussion
             ->hasMany(OpLikeCount::class, 'post_id', 'first_post_id')
             ->select('post_id')
             ->selectRaw('COUNT(*) as aggregate')
             ->groupBy('post_id'))
-        /*
-         * The people taking part, most recently active first, at most five
-         * per discussion.
-         *
-         * 🚨 Eager loaded, `limit(5)` is a PER-DISCUSSION limit (a row number
-         * over each discussion), so a thread with a thousand repliers still
-         * returns five rows. Only comments anyone can read count: not hidden,
-         * not private, and approved where flarum/approval is enabled.
-         */
         ->relationship('concourseParticipants', function (Discussion $discussion) {
             $grammar = $discussion->getConnection()->getQueryGrammar();
 
             $relation = $discussion->hasMany(ParticipantRow::class, 'discussion_id')
                 ->join('discussions', 'discussions.id', '=', 'posts.discussion_id')
-                // 🚨 Only each discussion's latest comments are read: the
-                // unique (discussion_id, number) index finds them directly,
-                // where grouping every post of a 2,000-post thread cost
-                // ~150 ms a page (measured on 166k posts). The faces are the
-                // most recently active people, so the tail is where they are;
-                // the "+N" total is core's own participant_count.
-                // 🚨 last_post_number is UNSIGNED on MySQL/MariaDB: a bare
-                // "- 30" on a short thread is an out-of-range error there
-                // (SQLite never complains). The CASE only subtracts when it
-                // can, and still leaves posts.number a range on the index.
                 ->whereRaw(
                     $grammar->wrap('posts.number').' > CASE WHEN '.$grammar->wrap('discussions.last_post_number').' > ? THEN '
                     .$grammar->wrap('discussions.last_post_number').' - ? ELSE 0 END',
@@ -159,12 +139,6 @@ return [
                 ->orderByRaw('MAX('.$grammar->wrap('posts.created_at').') desc')
                 ->limit(5);
 
-            /*
-             * 🚨 SQLite plans without statistics: given `type = 'comment'` it
-             * walks posts_type_created_at_index — every comment on the forum
-             * (130 ms at 166k posts) — instead of the discussion index. The
-             * unary `+` (SQLite only) keeps that one condition off the plan.
-             */
             if ($discussion->getConnection()->getDriverName() === 'sqlite') {
                 $relation->whereRaw('+'.$grammar->wrap('posts.type').' = ?', ['comment']);
             } else {
@@ -180,22 +154,31 @@ return [
 
     (new Extend\ApiResource(Resource\DiscussionResource::class))
         ->fields(Api\DiscussionResourceFields::class)
+        ->fields(fn () => [
+            Schema\Str::make('concourseExcerpt')
+                ->get(function (Discussion $discussion) {
+                    $post = $discussion->relationLoaded('concourseExcerpt') ? $discussion->getRelation('concourseExcerpt') : null;
+                    if ($post && $post->content) {
+                        $text = strip_tags($post->content);
+                        $text = preg_replace('/\s+/u', ' ', $text);
+                        return mb_substr($text, 0, 150);
+                    }
+                    return '';
+                }),
+        ])
         ->endpoint('index', fn (Endpoint\Index $endpoint) => $endpoint->eagerLoad(
-            fn (array $included, Context $context) => $rowRelations($context, true)
+            fn (array $included, Context $context) => array_merge(
+                $rowRelations($context, true),
+                ['concourseExcerpt']
+            )
         ))
-        // The discussion page's side panel shows the same faces.
         ->endpoint('show', fn (Endpoint\Show $endpoint) => $endpoint->eagerLoad(
-            fn (array $included, Context $context) => $rowRelations($context, false)
+            fn (array $included, Context $context) => array_merge(
+                $rowRelations($context, false),
+                ['concourseExcerpt']
+            )
         )),
 
-    /*
-     * The sidebar's tag tree. flarum/tags only preloads the top-level tags,
-     * so every child tag would be missing from it.
-     *
-     * One query for all of them (their parents eager-loaded so the `parent`
-     * linkage costs nothing per tag), through the tags' own visibility rules,
-     * only on a forum running flarum/tags and only for a visitor on Concourse.
-     */
     (new Extend\Conditional())
         ->whenExtensionEnabled('flarum-tags', fn () => [
             (new Extend\ApiResource(Resource\ForumResource::class))
