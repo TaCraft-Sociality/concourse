@@ -33,7 +33,6 @@
 // turned its title and text near-black on it.
 .DiscussionPage .DiscussionHero:not(.MarqueeHero) {
   background: none !important;
-  color: var(--heading-color) !important;
   padding: 24px 0 0;
   text-align: start;
 
@@ -48,10 +47,13 @@
     border-bottom: 1px solid var(--cc-line);
   }
   .DiscussionHero-title {
-    color: var(--heading-color) !important;
+    color: #2563eb !important;
     font-size: 24px;
     line-height: 32px;
-    font-weight: 600;
+    font-weight: 700;
+  }
+  [data-theme^='dark'] & .DiscussionHero-title {
+    color: #60a5fa !important;
   }
   .TagsLabel {
     display: inline-flex;
@@ -82,6 +84,28 @@
   }
 }
 
+.DiscussionPage .Stickiest-superSticky .DiscussionHero-title,
+.DiscussionPage .Stickiest-tagSticky .DiscussionHero-title,
+.DiscussionPage .DiscussionHero--sticky .DiscussionHero-title,
+.DiscussionPage .DiscussionHero--stickiest .DiscussionHero-title,
+.DiscussionPage .DiscussionHero:has(.Stickiest-superSticky) .DiscussionHero-title,
+.DiscussionPage .DiscussionHero:has(.Stickiest-tagSticky) .DiscussionHero-title,
+.Stickiest-superSticky .DiscussionHero-title,
+.Stickiest-tagSticky .DiscussionHero-title {
+  color: #f59e0b !important;
+}
+
+[data-theme^='dark'] .DiscussionPage .Stickiest-superSticky .DiscussionHero-title,
+[data-theme^='dark'] .DiscussionPage .Stickiest-tagSticky .DiscussionHero-title,
+[data-theme^='dark'] .DiscussionPage .DiscussionHero--sticky .DiscussionHero-title,
+[data-theme^='dark'] .DiscussionPage .DiscussionHero--stickiest .DiscussionHero-title,
+[data-theme^='dark'] .DiscussionPage .DiscussionHero:has(.Stickiest-superSticky) .DiscussionHero-title,
+[data-theme^='dark'] .DiscussionPage .DiscussionHero:has(.Stickiest-tagSticky) .DiscussionHero-title,
+[data-theme^='dark'] .Stickiest-superSticky .DiscussionHero-title,
+[data-theme^='dark'] .Stickiest-tagSticky .DiscussionHero-title {
+  color: #fbbf24 !important;
+}
+
 @media @cc-phone {
   .DiscussionPage .DiscussionHero:not(.MarqueeHero) {
     padding: 16px 0 0;
@@ -105,10 +129,40 @@
 .DiscussionPage .PostUser h3 {
   font-size: 14px;
   font-weight: 600;
+  color: #d97706 !important;
+}
+.DiscussionPage .PostUser h3 a,
+.DiscussionPage .PostUser a,
+.DiscussionPage .username {
+  color: #d97706 !important;
+}
+[data-theme^='dark'] .DiscussionPage .PostUser h3,
+[data-theme^='dark'] .DiscussionPage .PostUser h3 a,
+[data-theme^='dark'] .DiscussionPage .PostUser a,
+[data-theme^='dark'] .DiscussionPage .username {
+  color: #fbbf24 !important;
 }
 .DiscussionPage .Post-body {
   font-size: 16px;
   line-height: 1.65;
+}
+
+.DiscussionPage .Post-body h1,
+.DiscussionPage .Post-body h2,
+.DiscussionPage .Post-body h3,
+.DiscussionPage .Post-body h4,
+.DiscussionPage .Post-body h5,
+.DiscussionPage .Post-body h6 {
+  color: #4f46e5 !important;
+  font-weight: 700;
+}
+[data-theme^='dark'] .DiscussionPage .Post-body h1,
+[data-theme^='dark'] .DiscussionPage .Post-body h2,
+[data-theme^='dark'] .DiscussionPage .Post-body h3,
+[data-theme^='dark'] .DiscussionPage .Post-body h4,
+[data-theme^='dark'] .DiscussionPage .Post-body h5,
+[data-theme^='dark'] .DiscussionPage .Post-body h6 {
+  color: #818cf8 !important;
 }
 
 // ---- The panel ------------------------------------------------------------
