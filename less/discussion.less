@@ -34,23 +34,36 @@
 .DiscussionPage .DiscussionHero:not(.MarqueeHero) {
   background: none !important;
   padding: 24px 0 0;
-  text-align: start;
+  text-align: center !important;
+
+  @media @cc-desk {
+    margin-left: calc(-1 * var(--cc-nav-w)) !important;
+    width: calc(100% + var(--cc-nav-w)) !important;
+    max-width: 100vw !important;
+    display: flex !important;
+    justify-content: center !important;
+  }
 
   // The rule under the title stops at the column, not under the sidebar.
   .DiscussionHero-items {
     display: flex;
     flex-direction: column-reverse;
-    align-items: flex-start;
+    align-items: center !important;
+    justify-content: center !important;
     gap: 8px;
-    margin: 0;
+    margin: 0 auto !important;
     padding: 0 0 18px;
     border-bottom: 1px solid var(--cc-line);
+    width: 100% !important;
+    max-width: var(--cc-max) !important;
   }
   .DiscussionHero-title {
     color: #2563eb !important;
     font-size: 24px;
     line-height: 32px;
     font-weight: 700;
+    text-align: center !important;
+    width: 100% !important;
   }
   [data-theme^='dark'] & .DiscussionHero-title {
     color: #60a5fa !important;
@@ -58,7 +71,9 @@
   .TagsLabel {
     display: inline-flex;
     flex-wrap: wrap;
+    justify-content: center !important;
     gap: 4px 12px;
+    width: 100% !important;
   }
   .TagLabel {
     display: inline-flex;
@@ -109,6 +124,8 @@
 @media @cc-phone {
   .DiscussionPage .DiscussionHero:not(.MarqueeHero) {
     padding: 16px 0 0;
+    margin-left: 0 !important;
+    width: 100% !important;
 
     .DiscussionHero-title {
       font-size: 20px;
