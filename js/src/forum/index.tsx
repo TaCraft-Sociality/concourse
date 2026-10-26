@@ -30,9 +30,27 @@ app.initializers.add(
     registerWidgets();
 
     extend(DiscussionListItem.prototype, 'infoItems', function (this: any, items) {
-      const excerpt = this.attrs.discussion.attribute('concourseExcerpt');
+      const discussion = this.attrs.discussion;
+      let excerpt = discussion.attribute('concourseExcerpt');
+
       if (excerpt) {
         items.add('excerpt', m('div', { className: 'ConcourseExcerpt' }, excerpt + '...'), 50);
+      } else {
+        if (!discussion._fetchingExcerpt) {
+          discussion._fetchingExcerpt = true;
+          fetch(app.forum.attribute('apiUrl') + '/discussions/' + discussion.id())
+            .then(res => res.json())
+            .then(data => {
+              const firstPostRel = data.data.relationships.firstPost.data;
+              const post = data.included?.find((i: any) => i.type === 'posts' && i.id === firstPostRel.id);
+              if (post && post.attributes.contentHtml) {
+                let text = post.attributes.contentHtml.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+                discussion.pushAttributes({ concourseExcerpt: text.substring(0, 150) });
+                m.redraw();
+              }
+            })
+            .finally(() => { discussion._fetchingExcerpt = false; });
+        }
       }
     });
   },
