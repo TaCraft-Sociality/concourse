@@ -234,7 +234,9 @@ export default class Sidebar extends Component {
           }}
         >
           {child ? null : <span className="ConcourseTag-swatch" style={{ '--tag-color': tag.color() || 'var(--cc-faint)' }} aria-hidden="true" />}
-          <span className="ConcourseTag-name">{tag.name()}</span>
+          <span className="ConcourseTag-name">
+            {tag.name()} <span className="ConcourseTag-count">({tag.discussionCount()})</span>
+          </span>
           {unread ? <span className="ConcourseTag-dot" role="img" aria-label={ts('sidebar.unread')} /> : null}
         </Link>
       </li>

@@ -124,7 +124,7 @@ class PageHead extends Component<HeadAttrs> {
                 {children.map((child: any) => (
                   <li>
                     <Link href={app.route('tag', { tags: child.slug() })} className="ConcourseChip">
-                      {child.name()}
+                      {child.name()} ({child.discussionCount()})
                     </Link>
                   </li>
                 ))}
