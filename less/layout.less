@@ -417,9 +417,10 @@ html[data-theme] body {
 }
 
 .ConcourseTag-count {
-    font-size: 12px;
-    color: var(--cc-muted);
-    margin-left: 4px;
+  font-size: 12px;
+  color: var(--cc-muted);
+  margin-left: 4px;
+  font-weight: 400;
 }
 
 .ConcourseTag-dot {
@@ -487,6 +488,7 @@ html[data-theme] body {
   .ConcourseNav > li > a .Button-label,
   .ConcourseTag-name,
   .ConcourseTags-children,
+  .ConcourseTag-count,
   .ConcourseTag-dot,
   .ConcourseSidebar-footer,
   .ConcourseTag--all {
@@ -690,19 +692,50 @@ html[data-theme] body {
 
 // 隐藏tag的发帖按钮
 @media @cc-desk {
-    .TagsPage .App-primaryControl,
-    .TagsPage li.item-newDiscussion {
-      display: none !important;
-    }
-    
-    .TagsPage .Page-sidebar {
-      display: none !important;
-    }
-    
-    .TagsPage .Page-container .Page-content {
-      width: 100% !important;
-      max-width: 100% !important;
-      flex: 1 1 100% !important;
-      margin-top: 24px !important;
-    }
+  .TagsPage .App-primaryControl,
+  .TagsPage li.item-newDiscussion {
+    display: none !important;
   }
+  
+  .TagsPage .Page-sidebar {
+    display: none !important;
+  }
+  
+  .TagsPage .Page-container .Page-content {
+    width: 100% !important;
+    max-width: 100% !important;
+    flex: 1 1 100% !important;
+    margin-top: 24px !important; 
+  }
+}
+
+.ConcourseShell-footer-wrapper {
+  width: 100%;
+  margin: 0;
+}
+
+#footer {
+  padding: 24px 0 !important;
+}
+
+#footer a {
+  transition: color 0.2s ease, opacity 0.2s ease;
+}
+
+#footer a:hover {
+  color: var(--primary-color, #4a90e2) !important;
+  opacity: 0.9;
+}
+
+.App {
+  padding-bottom: 0 !important;
+}
+
+@media screen and (max-width: 767.98px) {
+  .ConcourseShell-footer-wrapper {
+    padding-bottom: 60px !important;
+  }
+  #footer {
+    padding: 16px 0 !important;
+  }
+}
