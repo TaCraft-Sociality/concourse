@@ -425,14 +425,14 @@ html[data-theme] body {
 
 // Children hang under their parent on a hairline, in a smaller size.
 .ConcourseTags-children {
-  margin: 0 0 6px 33px;
-  padding-left: 14px;
-  border-left: 1px solid var(--cc-line);
+  margin: 0 !important;
+  padding: 0 !important;
+  border-left: none !important;
 
   .ConcourseTag {
-    min-height: 30px;
-    padding: 0 8px;
-    font-size: 13px;
+    min-height: 40px !important;
+    padding: 0 14px !important;
+    font-size: 16px !important;
   }
 }
 
@@ -485,6 +485,105 @@ html[data-theme] body {
   .ConcourseSidebar-footer,
   .ConcourseTag--all {
     display: none;
+  }
+}
+
+.ConcourseHead-icon,
+.ConcourseHead-swatch,
+.ConcourseHead-text {
+  display: none !important;
+}
+
+.ConcourseHead-row {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  padding: 8px 20px !important;
+  min-height: auto !important;
+}
+
+.ConcourseHead-row > .ConcourseHead-text {
+  flex: 0 !important;
+}
+
+.ConcourseHead-tools {
+  display: flex !important;
+  width: 100% !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  flex-direction: row-reverse !important;
+}
+
+.ConcourseHead-actions {
+  margin-left: auto !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+.ConcourseHead-view {
+  margin-right: auto !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+.ConcourseHead-tools > * {
+  margin: 0 !important;
+}
+
+@media @cc-desk {
+  .ConcourseHead-view {
+    .Dropdown-menu {
+      display: flex !important;
+      position: static !important;
+      opacity: 1 !important;
+      visibility: visible !important;
+      box-shadow: none !important;
+      background: transparent !important;
+      border: none !important;
+      padding: 0 !important;
+      flex-direction: row !important;
+      gap: 4px !important;
+      min-width: 0 !important;
+    }
+    
+    .Dropdown-toggle {
+      display: none !important;
+    }
+    
+    .Dropdown-menu li {
+      margin: 0 !important;
+      padding: 0 !important;
+      background: transparent !important;
+    }
+    
+    .Dropdown-menu li a,
+    .Dropdown-menu li button {
+      display: inline-flex !important;
+      align-items: center !important;
+      height: 28px !important;
+      padding: 0 10px !important;
+      border-radius: 6px !important;
+      background: transparent !important;
+      color: var(--cc-muted) !important;
+      font-size: 13px !important;
+      text-decoration: none !important;
+      border: none !important;
+      line-height: 1 !important;
+      transition: all 0.2s !important;
+    }
+
+    .Dropdown-menu li a:hover,
+    .Dropdown-menu li button:hover {
+      background: var(--cc-hover) !important;
+      color: var(--cc-text) !important;
+    }
+
+    .Dropdown-menu li.active a,
+    .Dropdown-menu li.active button {
+      color: var(--cc-text) !important;
+      font-weight: 600 !important;
+      background: transparent !important;
+    }
   }
 }
 
@@ -555,7 +654,6 @@ html[data-theme] body {
   color: inherit !important;
 }
 
-// 删除标签灰块
 .HeaderNav-link,
 .HeaderNav-link.active,
 .HeaderNav-link:hover {
@@ -569,7 +667,6 @@ html[data-theme] body {
   color: var(--cc-text) !important;
 }
 
-// 扩宽整个编辑框
 @media @cc-desk {
   .App-composer .Composer {
     position: fixed !important;
