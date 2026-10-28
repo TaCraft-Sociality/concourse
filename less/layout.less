@@ -681,3 +681,22 @@ html[data-theme] body {
     border-radius: 0 !important;
   }
 }
+
+// 隐藏tag的发帖按钮
+@media @cc-desk {
+    .TagsPage .App-primaryControl,
+    .TagsPage li.item-newDiscussion {
+      display: none !important;
+    }
+    
+    .TagsPage .Page-sidebar {
+      display: none !important;
+    }
+    
+    .TagsPage .Page-container .Page-content {
+      width: 100% !important;
+      max-width: 100% !important;
+      flex: 1 1 100% !important;
+      margin-top: 24px !important;
+    }
+  }
