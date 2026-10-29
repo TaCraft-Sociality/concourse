@@ -1,11 +1,3 @@
-// ---------------------------------------------------------------------------
-// The frame: a clean header across the top, the sidebar fixed on the left,
-// the page beside it, all inside one centred column of --cc-max.
-// ---------------------------------------------------------------------------
-
-// 🚨 Core's page template carries an inline `[data-theme^="dark"] body`
-// background (so the page never flashes white while CSS loads); the theme's
-// own ground has to outrank it or dark mode stays core's navy.
 body,
 html[data-theme] body {
   font-family: var(--cc-font);
@@ -13,15 +5,12 @@ html[data-theme] body {
   -webkit-font-smoothing: antialiased;
 }
 
-// Where the frame's left edge is, whatever the window's width.
 @cc-left: ~"max(var(--cc-gutter), calc((100vw - var(--cc-max)) / 2 + var(--cc-gutter)))";
 
 .ConcourseShell-tabbar,
 .ConcourseShell-scrim {
   display: none;
 }
-
-// ---- Header ---------------------------------------------------------------
 
 @media @cc-desk {
   .App-header {
@@ -31,8 +20,6 @@ html[data-theme] body {
     border-bottom: 1px solid var(--cc-line);
     box-shadow: none !important;
 
-    // The header is a flex row itself, so its container must be told to
-    // fill it or it shrinks to its contents and sits in the middle.
     .container {
       flex: 1 1 auto;
       width: 100%;
@@ -58,8 +45,6 @@ html[data-theme] body {
     max-height: 34px;
   }
 
-  // Central's header: search as a rounded field, then icon buttons, with the
-  // avatar alone at the end.
   .Header-secondary {
     .Header-controls {
       gap: 6px;
@@ -110,7 +95,6 @@ html[data-theme] body {
       }
     }
 
-    // The unread count, as a small blue bubble on the icon's corner.
     .Bubble,
     .NotificationsDropdown-unread,
     .DialogsDropdown-unread {
@@ -128,7 +112,6 @@ html[data-theme] body {
       box-shadow: 0 0 0 2px var(--header-bg);
     }
 
-    // The session menu is the avatar alone.
     .SessionDropdown .Dropdown-toggle {
       padding: 0 5px;
       border-radius: 999px;
@@ -144,17 +127,7 @@ html[data-theme] body {
   }
 }
 
-// ---- The page column ------------------------------------------------------
-//
-// One centred grid inside .App-content: the sidebar is its first column, and
-// everything else the page renders — the router's page, notices, and
-// whatever other extensions put there — flows in the second. So a page that
-// is not a centred container (a Page Builder homepage, a full-width hero)
-// still starts beside the sidebar instead of running under it.
-
 :where(:root) {
-  // Where sticky things stop: under the header, and under the ESPN CFB
-  // ticker on forums that pin it there.
   --cc-top: var(--header-height);
 }
 :where(.has-cfb-ticker-top) {
@@ -182,7 +155,6 @@ html[data-theme] body {
     }
   }
 
-  // Inside the column, a page's container is the column.
   .App-content .container {
     width: auto;
     max-width: none;
@@ -200,8 +172,6 @@ html[data-theme] body {
     padding-left: 6px;
   }
 }
-
-// ---- Sidebar --------------------------------------------------------------
 
 @media @cc-desk {
   .ConcourseShell-sidebar {
@@ -243,7 +213,6 @@ html[data-theme] body {
     display: none;
   }
 
-  // Ours, and the core LinkButtons other extensions add, alike.
   .ConcourseNav-item,
   > li > .Button,
   > li > a {
@@ -316,7 +285,6 @@ html[data-theme] body {
     }
   }
 
-  // Other extensions' links, under "More", a size down from ours.
   &--extra {
     .ConcourseNav-item,
     > li > .Button,
@@ -430,7 +398,6 @@ html[data-theme] body {
   background: var(--cc-accent);
 }
 
-// Children hang under their parent on a hairline, in a smaller size.
 .ConcourseTags-children {
   margin: 0 !important;
   padding: 0 !important;
@@ -469,7 +436,6 @@ html[data-theme] body {
   display: none !important;
 }
 
-// The slim rail between phone and wide desktop: icons and tag swatches only.
 @media @cc-rail {
   .ConcourseSidebar {
     align-items: center;
@@ -595,7 +561,6 @@ html[data-theme] body {
   }
 }
 
-// 登陆弹窗
 .LogInButtons {
   display: flex !important;
   flex-direction: column !important;
@@ -690,7 +655,6 @@ html[data-theme] body {
   }
 }
 
-// 隐藏tag的发帖按钮
 @media @cc-desk {
   .TagsPage .App-primaryControl,
   .TagsPage li.item-newDiscussion {
@@ -738,4 +702,327 @@ html[data-theme] body {
   #footer {
     padding: 16px 0 !important;
   }
+}
+
+.App-notices .Alert.Alert--emailConfirmation {
+  --noti-bg: #ffffff;
+  --noti-border: rgba(0, 0, 0, 0.06);
+  --noti-shadow: 0 4px 16px -4px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
+  --noti-text: #475569;
+  --noti-highlight-bg: #f1f5f9;
+  --noti-highlight-text: #0f172a;
+  --noti-btn-bg: #ffffff;
+  --noti-btn-border: #e2e8f0;
+  --noti-btn-text: #475569;
+  --noti-btn-hover-bg: #f8fafc;
+  --noti-btn-hover-border: #cbd5e1;
+  --noti-btn-hover-text: #0f172a;
+  --noti-btn-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+  --noti-focus: #94a3b8;
+
+  position: relative;
+  background: var(--noti-bg);
+  border: 1px solid var(--noti-border);
+  border-radius: 12px;
+  box-shadow: var(--noti-shadow);
+  margin: 1rem 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.App-notices .Alert--emailConfirmation .Alert-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.25rem 1.5rem;
+}
+
+.App-notices .Alert--emailConfirmation .Alert-content {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.App-notices .Alert--emailConfirmation .Alert-body {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--noti-text);
+  letter-spacing: 0.01em;
+  word-break: break-word;
+}
+
+.App-notices .Alert--emailConfirmation .Alert-body strong {
+  font-weight: 600;
+  color: var(--noti-highlight-text);
+  background: var(--noti-highlight-bg);
+  padding: 0.1em 0.4em;
+  border-radius: 6px;
+  margin: 0 0.15em;
+  white-space: nowrap;
+}
+
+.App-notices .Alert--emailConfirmation .Alert-controls {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.App-notices .Alert--emailConfirmation .Alert-controls li {
+  display: inline-flex;
+}
+
+.App-notices .Alert--emailConfirmation .Button.Button--link {
+  appearance: none;
+  background: var(--noti-btn-bg);
+  border: 1px solid var(--noti-btn-border);
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--noti-btn-text);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  font-family: inherit;
+  line-height: 1.2;
+  box-shadow: var(--noti-btn-shadow);
+}
+
+.App-notices .Alert--emailConfirmation .Button.Button--link:hover {
+  background: var(--noti-btn-hover-bg);
+  border-color: var(--noti-btn-hover-border);
+  color: var(--noti-btn-hover-text);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.05);
+}
+
+.App-notices .Alert--emailConfirmation .Button.Button--link:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.App-notices .Alert--emailConfirmation .Button.Button--link:focus-visible {
+  outline: 2px solid var(--noti-focus);
+  outline-offset: 2px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .App-notices .Alert.Alert--emailConfirmation {
+    --noti-bg: #1e232d;
+    --noti-border: rgba(255, 255, 255, 0.08);
+    --noti-shadow: 0 4px 16px -4px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.2);
+    --noti-text: #94a3b8;
+    --noti-highlight-bg: #2e3747;
+    --noti-highlight-text: #e2e8f0;
+    --noti-btn-bg: #262d3a;
+    --noti-btn-border: #3b475a;
+    --noti-btn-text: #cbd5e1;
+    --noti-btn-hover-bg: #2e3747;
+    --noti-btn-hover-border: #4a5a73;
+    --noti-btn-hover-text: #f1f5f9;
+    --noti-btn-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    --noti-focus: #64748b;
+  }
+}
+
+.dark .App-notices .Alert.Alert--emailConfirmation,
+.theme-dark .App-notices .Alert.Alert--emailConfirmation,
+[data-theme="dark"] .App-notices .Alert.Alert--emailConfirmation {
+  --noti-bg: #1e232d;
+  --noti-border: rgba(255, 255, 255, 0.08);
+  --noti-shadow: 0 4px 16px -4px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.2);
+  --noti-text: #94a3b8;
+  --noti-highlight-bg: #2e3747;
+  --noti-highlight-text: #e2e8f0;
+  --noti-btn-bg: #262d3a;
+  --noti-btn-border: #3b475a;
+  --noti-btn-text: #cbd5e1;
+  --noti-btn-hover-bg: #2e3747;
+  --noti-btn-hover-border: #4a5a73;
+  --noti-btn-hover-text: #f1f5f9;
+  --noti-btn-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  --noti-focus: #64748b;
+}
+
+@media (max-width: 560px) {
+  .App-notices .Alert--emailConfirmation .Alert-container {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+    padding: 1.25rem;
+  }
+
+  .App-notices .Alert--emailConfirmation .Alert-controls {
+    justify-content: flex-end;
+  }
+
+  .App-notices .Alert--emailConfirmation .Alert-body {
+    font-size: 0.9rem;
+  }
+}
+
+#alerts .AlertManager .Alert {
+  --alert-bg: #ffffff;
+  --alert-border: rgba(0, 0, 0, 0.06);
+  --alert-shadow: 0 4px 12px -4px rgba(0, 0, 0, 0.05);
+  --alert-text: #475569;
+  --alert-btn-bg: #ffffff;
+  --alert-btn-border: #e2e8f0;
+  --alert-btn-text: #475569;
+  --alert-btn-hover-bg: #f8fafc;
+  --alert-btn-hover-border: #cbd5e1;
+  --alert-btn-hover-text: #0f172a;
+  --alert-focus: #94a3b8;
+  --alert-icon-color: #94a3b8;
+  --alert-icon-hover-bg: #f1f5f9;
+
+  position: relative;
+  background: var(--alert-bg);
+  border: 1px solid var(--alert-border);
+  box-shadow: var(--alert-shadow);
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+#alerts .AlertManager .Alert.Alert--success .Alert-body {
+  color: #059669;
+}
+
+#alerts .AlertManager .Alert-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.65rem 0.85rem;
+}
+
+#alerts .AlertManager .Alert-content {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+
+#alerts .AlertManager .Alert-body {
+  font-size: 0.875rem;
+  line-height: 1.4;
+  letter-spacing: 0.01em;
+  word-break: break-word;
+}
+
+#alerts .AlertManager .Alert-controls {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  flex-shrink: 0;
+}
+
+#alerts .AlertManager .Alert-controls li {
+  display: inline-flex;
+}
+
+#alerts .AlertManager .Button.Button--link:not(.Button--icon) {
+  appearance: none;
+  background: transparent;
+  border: none;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--alert-btn-text);
+  cursor: pointer;
+  transition: color 0.15s ease;
+  white-space: nowrap;
+  font-family: inherit;
+  line-height: 1;
+  border-radius: 4px;
+}
+
+#alerts .AlertManager .Button.Button--link:not(.Button--icon):hover {
+  color: var(--alert-btn-hover-text);
+  background: var(--alert-btn-hover-bg);
+}
+
+#alerts .AlertManager .Button.Button--link:focus-visible {
+  outline: 2px solid var(--alert-focus);
+  outline-offset: 2px;
+}
+
+#alerts .AlertManager .Button.Button--icon {
+  appearance: none;
+  padding: 0;
+  width: 22px;
+  height: 22px;
+  border-radius: 4px;
+  border: none;
+  background: transparent;
+  color: var(--alert-icon-color);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+#alerts .AlertManager .Button.Button--icon:hover {
+  background: var(--alert-icon-hover-bg);
+  color: var(--alert-btn-hover-text);
+}
+
+#alerts .AlertManager .Button.Button--icon .Button-label {
+  display: none;
+}
+
+#alerts .AlertManager .Button.Button--icon .Button-icon {
+  font-size: 0.75rem;
+  line-height: 1;
+}
+
+@media (prefers-color-scheme: dark) {
+  #alerts .AlertManager .Alert {
+    --alert-bg: #1e232d;
+    --alert-border: rgba(255, 255, 255, 0.08);
+    --alert-shadow: 0 4px 12px -4px rgba(0, 0, 0, 0.25);
+    --alert-text: #94a3b8;
+    --alert-btn-text: #94a3b8;
+    --alert-btn-hover-bg: #2e3747;
+    --alert-btn-hover-text: #f1f5f9;
+    --alert-focus: #64748b;
+    --alert-icon-color: #64748b;
+    --alert-icon-hover-bg: #2e3747;
+  }
+
+  #alerts .AlertManager .Alert.Alert--success .Alert-body {
+    color: #34d399;
+  }
+}
+
+.dark #alerts .AlertManager .Alert,
+.theme-dark #alerts .AlertManager .Alert,
+[data-theme="dark"] #alerts .AlertManager .Alert {
+  --alert-bg: #1e232d;
+  --alert-border: rgba(255, 255, 255, 0.08);
+  --alert-shadow: 0 4px 12px -4px rgba(0, 0, 0, 0.25);
+  --alert-text: #94a3b8;
+  --alert-btn-text: #94a3b8;
+  --alert-btn-hover-bg: #2e3747;
+  --alert-btn-hover-text: #f1f5f9;
+  --alert-focus: #64748b;
+  --alert-icon-color: #64748b;
+  --alert-icon-hover-bg: #2e3747;
+}
+
+.dark #alerts .AlertManager .Alert.Alert--success .Alert-body,
+.theme-dark #alerts .AlertManager .Alert.Alert--success .Alert-body,
+[data-theme="dark"] #alerts .AlertManager .Alert.Alert--success .Alert-body {
+  color: #34d399;
 }
