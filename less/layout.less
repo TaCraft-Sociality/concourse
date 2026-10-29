@@ -1026,3 +1026,13 @@ html[data-theme] body {
 [data-theme="dark"] #alerts .AlertManager .Alert.Alert--success .Alert-body {
   color: #34d399;
 }
+
+#alerts .Alert {
+  animation: alert-fade-out 3s forwards;
+}
+
+@keyframes alert-fade-out {
+  0% { opacity: 1; visibility: visible; }
+  80% { opacity: 1; visibility: visible; }
+  100% { opacity: 0; visibility: hidden; }
+}
