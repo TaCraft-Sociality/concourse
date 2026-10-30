@@ -29,21 +29,32 @@ app.initializers.add(
           const user = app.session.user;
           if (!user) return;
 
-          const li = document.createElement('li');
-          li.className = 'item-bindQQ';
-          
-          li.innerHTML = `
+          const settings = menu.querySelector('.item-settings');
+
+          const liQQ = document.createElement('li');
+          liQQ.className = 'item-bindQQ';
+          liQQ.innerHTML = `
             <a class="LinkButton hasIcon" href="/u/${user.id()}/security">
               <i aria-hidden="true" class="icon fab fa-qq Button-icon"></i>
               <span class="Button-label"><span class="Button-labelText">绑定 QQ</span></span>
             </a>
           `;
-          
-          const settings = menu.querySelector('.item-settings');
+
+          const liFriends = document.createElement('li');
+          liFriends.className = 'item-friends';
+          liFriends.innerHTML = `
+            <a class="LinkButton hasIcon" href="/u/${user.slug()}/friendship">
+              <i aria-hidden="true" class="icon fas fa-user-friends Button-icon"></i>
+              <span class="Button-label"><span class="Button-labelText">我的好友</span></span>
+            </a>
+          `;
+
           if (settings) {
-            settings.after(li);
+            settings.after(liQQ);
+            liQQ.after(liFriends);
           } else {
-            menu.appendChild(li);
+            menu.appendChild(liQQ);
+            menu.appendChild(liFriends);
           }
         }
       }, 50);
