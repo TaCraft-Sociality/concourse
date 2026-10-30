@@ -9,16 +9,6 @@ import installDiscussionPage from './discussionPage';
 import registerWidgets from './widgets';
 import { bootVisits } from './visits';
 
-// NOTE: the admin extender is exported from js/src/admin/index.tsx and
-// NOWHERE else. It imports flarum/admin/app, which does not exist on the
-// forum, and re-exporting it here would take the whole forum down at boot.
-
-/*
- * Priority -100 so this runs AFTER other extensions' initializers: Concourse
- * wraps what flarum/tags and others have already added (the tag hero, the
- * sidebar's nav items, the composer's tag pre-fill) instead of being wrapped
- * by them.
- */
 app.initializers.add(
   'ernestdefoe-concourse',
   () => {
@@ -28,6 +18,36 @@ app.initializers.add(
     installRows();
     installDiscussionPage();
     registerWidgets();
+
+    document.addEventListener('click', function (e) {
+      const toggle = (e.target as HTMLElement).closest('.SessionDropdown .Dropdown-toggle');
+      if (!toggle) return;
+
+      setTimeout(() => {
+        const menu = document.querySelector('.SessionDropdown .Dropdown-menu');
+        if (menu && !menu.querySelector('.item-bindQQ')) {
+          const user = app.session.user;
+          if (!user) return;
+
+          const li = document.createElement('li');
+          li.className = 'item-bindQQ';
+          
+          li.innerHTML = `
+            <a class="LinkButton hasIcon" href="/u/${user.id()}/security">
+              <i aria-hidden="true" class="icon fab fa-qq Button-icon"></i>
+              <span class="Button-label"><span class="Button-labelText">绑定 QQ</span></span>
+            </a>
+          `;
+          
+          const settings = menu.querySelector('.item-settings');
+          if (settings) {
+            settings.after(li);
+          } else {
+            menu.appendChild(li);
+          }
+        }
+      }, 50);
+    });
 
     extend(DiscussionListItem.prototype, 'infoItems', function (this: any, items) {
       const discussion = this.attrs.discussion;
